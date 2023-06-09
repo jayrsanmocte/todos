@@ -80,7 +80,7 @@ const Todos = () => {
               <th scope="row">{index + 1}</th>
               <td>{todo.todo}</td>
               <td>
-                <button type="button" className="btn btn-danger" onClick={() => handleDelete(todo.id)}>X</button> 
+                <button type="button" className="btn btn-danger" onClick={() => handleDelete(todo.id)}>x</button> 
               </td>
             </tr>
           ))}
