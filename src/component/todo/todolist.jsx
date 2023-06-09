@@ -63,6 +63,30 @@ const Todos = () => {
       });
   };
 
+  const handleUpdate = (id) => {
+    fetch(`https://dummyjson.com/todos/${id}`, {
+      method: 'PUT', // or PATCH
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        completed: false,
+      }),
+    })
+      .then((res) => res.json())
+      .then((updatedTodo) => {
+        setData((prevData) =>
+          prevData.map((todo) => {
+            if (todo.id === id) {
+              return { ...todo, completed: updatedTodo.completed };
+            }
+            return todo;
+          })
+        );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <div className='container' id='tododo'>
@@ -76,6 +100,7 @@ const Todos = () => {
             <th scope='col'>#</th>
             <th scope='col'>Todo</th>
             <th scope='col'>User ID</th>
+            <th scope='col'>Completed</th>
             <th scope='col'>Action</th>
           </tr>
         </thead>
@@ -85,13 +110,21 @@ const Todos = () => {
               <th scope='row'>{index + 1}</th>
               <td>{todo.todo}</td>
               <td>{todo.userId}</td>
+              <td>{todo.completed ? 'Yes' : 'No'}</td>
               <td>
                 <button
                   type='button'
                   className='btn btn-danger'
                   onClick={() => handleDelete(todo.id)}
                 >
-                  x
+                  Delete
+                </button>
+                <button
+                  type='button'
+                  className='btn btn-primary'
+                  onClick={() => handleUpdate(todo.id)}
+                >
+                  Update
                 </button>
               </td>
             </tr>
