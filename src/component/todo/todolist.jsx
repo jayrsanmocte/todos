@@ -8,12 +8,14 @@ const Todos = () => {
   useEffect(() => {
     fetch('https://dummyjson.com/todos?limit=150')
       .then((res) => res.json())
-      .then((data) => {setData(data.todos)})
-        .then( () => { 
+      .then((data) => {
+        setData(data.todos);
+      })
+      .then(() => {
         setTimeout(() => {
-            let table = new DataTable('#myTable');
+          let table = new DataTable('#myTable');
         }, 500);
-        });
+      });
   }, []);
 
   const handleChange = (event) => {
@@ -36,11 +38,11 @@ const Todos = () => {
         setData((prevData) => [...prevData, todoData]);
       })
       .then(() => setInput(''))
-      .then(() => {setLoading(false)
+      .then(() => {
+        setLoading(false);
         // let table = new DataTable('#myTable');
-    });
+      });
   };
-  
 
   const handleDelete = (id) => {
     const isNewlyAdded = data.some((todo) => todo.id === id);
@@ -63,24 +65,34 @@ const Todos = () => {
 
   return (
     <>
-      <div className='container'id='tododo'>Todo-List</div>
-      <input type="text" onChange={handleChange} value={input} />
+      <div className='container' id='tododo'>
+        Todo-List
+      </div>
+      <input type='text' onChange={handleChange} value={input} />
       <button onClick={handleSubmit}>ADD</button>
-      <table className="table table-dark table-striped" id="myTable">
+      <table className='table table-dark table-striped' id='myTable'>
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">Todo</th>
-            <th scope="col">Action</th>
+            <th scope='col'>#</th>
+            <th scope='col'>Todo</th>
+            <th scope='col'>User ID</th>
+            <th scope='col'>Action</th>
           </tr>
         </thead>
         <tbody>
           {data.map((todo, index) => (
             <tr key={todo.id}>
-              <th scope="row">{index + 1}</th>
+              <th scope='row'>{index + 1}</th>
               <td>{todo.todo}</td>
+              <td>{todo.userId}</td>
               <td>
-                <button type="button" className="btn btn-danger" onClick={() => handleDelete(todo.id)}>x</button> 
+                <button
+                  type='button'
+                  className='btn btn-danger'
+                  onClick={() => handleDelete(todo.id)}
+                >
+                  x
+                </button>
               </td>
             </tr>
           ))}
